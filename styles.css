@@ -1,0 +1,13 @@
+body{
+    background-color: #cfd8d2 !important;
+    font-family: 'Lato', Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+
+#duedate_header{
+   text-align: center;
+}
+
+.h3 {
+    text-align: center;
+}
