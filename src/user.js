@@ -13,18 +13,9 @@ class User {
     }
 
     static newMethod() {
-        return `
-        <form id="user-form">
-            Name: <input type ="text" id="name">
-            <br></br>
-            Days Before Due Date: <input type="number" id="days_until">
-            <br></br>
-            Description: <input type="text id="description">
-            <br></br>
-            <input type="submit" id="Add user">
-
-
-        </form>
-        `;
+        
+       
     }
-}
+     
+};
+
