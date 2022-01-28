@@ -7,17 +7,18 @@ const addForm = document.querySelector(".form")
 const inputFields = document.querySelectorAll(".input-text")
 const mainContainer = document.querySelector("main")
 
-
 fetchProjects()
 
-function hideProjectForm(){
-  addForm.style.display= 'none'
-}
+
 
 function fetchProjects() {
   fetch(PROJECTS_URL)
   .then(response => response.json())
   .then(projects => renderProjects(projects));
+}
+
+function checkLogin() {
+  
 }
 
 function fetchMilestones(){
@@ -28,11 +29,11 @@ function fetchMilestones(){
 function renderProjects(projects){
      projects.forEach(project => {
      mainContainer.innerHTML += 
-     
-     `<div class="card"> 
+     `<div class="project-card"> 
       <button onclick="fetchMilestones(${project.id})"> ${project.name} </button> 
       <h2>${project.kind}</h2>
       <h3>${project.due_date}</h3>
+      <button linkto="deleteProject()"> Delete</button>
       <btn>
       </div>
       `
@@ -55,35 +56,16 @@ addForm.addEventListener('submit', function(e){
         })
       })
     fetchProjects()
-  })
+})
 
-  function deleteProject(event){
-    let project = 
-    fetch(CART_PLANTS_URL + "/" + cartPlant, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json"
-        },
-        body: JSON.stringify({
-            id: cartPlant,
-        }),
-    })
-    .then(res => res.json())
-    .then(res => {
-        loggedIn = res
-        renderLoggedInUser()
-    })
-}
+
 
 function mileStoneForm(){
     addForm.innerHTML = " "
-    mainContainer.innerHTML += `<div class="card">
-        
+    mainContainer.innerHTML += `<div class="project-card">
         <h1> ${milestone.name} </h1>
         <h2>${milestone.description}</h2>
         <h3>${milestone.lead_time}</h3>
-        <button onclick="fetchProjects()"> Return to Project List </button>
         <btn>
       </div>`
 
@@ -91,19 +73,16 @@ function mileStoneForm(){
 
 function displayMilestones(milestones){
   {
-    mileStoneForm()
-    mainContainer.innerHTML = " "
-    
-    milestones.forEach(milestone => {
-       mainContainer.innerHTML += `<div class="card">
+    mainContainer.innerHTML = " "  
+    milestones.forEach(milestone => {  
+       mainContainer.innerHTML += `<div class="project-card">
         
         <h1> ${milestone.name} </h1>
         <h2>${milestone.description}</h2>
         <h3>${milestone.lead_time}</h3>
-        <button onclick="fetchProjects()"> Return to Project List </button>
+        <button onclick="location.reload()"> Return to Project List</button>
         <btn>
       </div>`
-      
     })
   }
 }

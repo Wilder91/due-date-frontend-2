@@ -12,9 +12,11 @@ body{
     text-align: center;
 }
 
-.card{
+.project-card{
     background-color: rgb(235, 235, 235) !important;
     width: 400px;
     margin: auto;
     border-radius: 1cm;
+    font-family:Arial, Helvetica, sans-serif;
+    
 }
