@@ -3,24 +3,40 @@ const USERS_URL = `${BASE_URL}/users`
 const PROJECTS_URL = `${BASE_URL}/projects`
 
 
-const addProjectForm = document.querySelector(".project-form-container")
-const inputFields = document.querySelector(".input-text")
-let projectsContainer = document.querySelector("container.projects-container")
+const addProjectForm = document.querySelector(".project-form")
+const inputFields = document.querySelectorAll(".input-text")
+const mainContainer = document.querySelector("main")
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
     fetchProjects();
-    postProject();
-    renderProjects();
+    
 });
 function fetchProjects() {
   return fetch(PROJECTS_URL)
   .then(response => response.json())
-  .then(data => renderProjects(data));
+  .then(projects => renderProjects(projects));
+
+  
+}
+function renderProjects(projects){
+  mainContainer.innerHTML = ""
+  
+  projects.forEach(project => {
+     mainContainer.innerHTML += `<div class="card">
+      
+      <h1> ${project.name} </h1>
+      <h2>${project.kind}</h2>
+      <h3>${project.due_date}</h3>
+    </div>`
+    
+  })
 }
 
-
-function postProject(project_data) {
+addProjectForm.addEventListener('submit', function(e){
+  
+  e.preventDefault()
     fetch(PROJECTS_URL, {
         method: 'POST',
         headers: {
@@ -28,30 +44,11 @@ function postProject(project_data) {
           Accept: "application/json"
         },
         body: JSON.stringify({
-          "name": project_data.name.value,
-          "kind": project_data.image.value,
-          "date": project_data.image.value,
+          name: inputFields[0].value,
+          kind: inputFields[1].value,
+          date: inputFields[2].value,
         })
       })
-      .then(res => res.json())
-      .then((obj_project) => {
-        renderProjects(obj_project)
-      })
-  }
+     renderProjects()
+  })
 
-  function renderProjects(project) {
-    let h2 = document.createElement('h2')
-    h2.innerText = project.name
-
-    let h3 = document.createElement('h3')
-    h3.innerText = project.kind
-
-  
-    let divCard = document.createElement('div')
-    divCard.setAttribute('class', 'card')
-    divCard.append(h2, h3)
-    
-  }
-function displayText() {
-    projectsContainer.innerHTML = "Hello"
-}
