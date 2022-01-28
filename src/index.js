@@ -3,7 +3,7 @@ const USERS_URL = `${BASE_URL}/users`
 const PROJECTS_URL = `${BASE_URL}/projects`
 const MILESTONES_URL= `${BASE_URL}/milestones`
 
-const addProjectForm = document.querySelector(".project-form")
+const addForm = document.querySelector(".form")
 const inputFields = document.querySelectorAll(".input-text")
 const mainContainer = document.querySelector("main")
 
@@ -11,7 +11,7 @@ const mainContainer = document.querySelector("main")
 fetchProjects()
 
 function hideProjectForm(){
-  addProjectForm.style.display= 'none'
+  addForm.style.display= 'none'
 }
 
 function fetchProjects() {
@@ -23,12 +23,10 @@ function fetchProjects() {
 function fetchMilestones(){
   fetch(MILESTONES_URL)
   .then(response => response.json())
-  .then(milestones => displayMilestones(milestones))
+  .then(milestones => displayMilestones(milestones));
 }
 function renderProjects(projects){
-  mainContainer.innerHTML = ""
-  
-  projects.forEach(project => {
+     projects.forEach(project => {
      mainContainer.innerHTML += 
      
      `<div class="card"> 
@@ -42,7 +40,7 @@ function renderProjects(projects){
   })
 }
 
-addProjectForm.addEventListener('submit', function(e){
+addForm.addEventListener('submit', function(e){
   e.preventDefault()
     fetch(PROJECTS_URL, {
         method: 'POST',
@@ -79,12 +77,20 @@ addProjectForm.addEventListener('submit', function(e){
 }
 
 function mileStoneForm(){
+    addForm.innerHTML = " "
+    mainContainer.innerHTML += `<div class="card">
+        
+        <h1> ${milestone.name} </h1>
+        <h2>${milestone.description}</h2>
+        <h3>${milestone.lead_time}</h3>
+        <button onclick="fetchProjects()"> Return to Project List </button>
+        <btn>
+      </div>`
 
 }
 
 function displayMilestones(milestones){
   {
-    hideProjectForm()
     mileStoneForm()
     mainContainer.innerHTML = " "
     
@@ -94,6 +100,7 @@ function displayMilestones(milestones){
         <h1> ${milestone.name} </h1>
         <h2>${milestone.description}</h2>
         <h3>${milestone.lead_time}</h3>
+        <button onclick="fetchProjects()"> Return to Project List </button>
         <btn>
       </div>`
       
