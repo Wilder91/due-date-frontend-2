@@ -11,36 +11,75 @@ const mainContainer = document.querySelector("main")
 const milestoneFields = document.querySelectorAll(".milestone-text")
 const milestoneForm = document.querySelector(".milestone-form")
 const returnButton = document.querySelector(".return-button")
+const logOutButton = document.querySelector(".logOut-button")
 
-fetchProjects();
+milestoneForm.style.display ="none";
+projectForm.style.display ="none";
 
+
+
+checkForUser();
+
+
+function checkForUser() {
+  if (localStorage.email) { 
+    fetchUsers();
+    fetchProjects();
+  } else {
+    displayLogin();
+  }
+}
+
+function logOut() {
+  localStorage.clear();
+  location.reload();
+}
+
+function displayLogin() {
+  localStorage.clear()
+  signUpForm.style.display="block";
+}
 
 function fetchProjects() {
-  fetch(PROJECTS_URL)
+  fetch(USERS_URL + "/" + localStorage.user_id + "/" + "projects")
   .then(response => response.json())
   .then(projects => displayProjects(projects));
+}
+
+function fetchUsers() {
+  fetch(USERS_URL)
+  .then(response => response.json())
+  .then(users => displayUsers(users));
 }
 
 
 
 function fetchMilestones(id){
-  
   fetch(HOME_URL + "/" + "projects" + "/" + id + "/" + "milestones")
   .then(response => response.json())
   .then(milestones => displayMilestones(milestones, id));
-  
+
 }
 
 function projectFormDisappear() {
   projectForm.style.display = 'none'
 }
 
+function projectFormAppear() {
+  projectForm.style.display = 'block'
+}
 
 function displayProjects(projects){
+  signUpForm.style.display = "none"
   milestoneForm.style.display = 'none'
+  mainContainer.innerHTML = ""
+  hello.innerHTML = `Hello ${localStorage.name}`
+  projectForm.style.display = "block"
      projects.forEach(project => {
      mainContainer.innerHTML += 
+
      `<div class="project-card"> 
+
       <button onclick="fetchMilestones(${project.id})"> ${project.name} </button> 
       <h2>${project.kind}</h2>
       <h3>${project.due_date}</h3>
@@ -53,6 +92,21 @@ function displayProjects(projects){
   })
   
 }
+
+function fetchUser(users){
+  console.log(projectId)
+  
+  fetch(USERS_URL + "/" + "id", {
+      method: "GET",
+      headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+      },
+      
+  })
+ 
+}
+
 
 function deleteProject(projectId){
   console.log(projectId)
@@ -68,11 +122,23 @@ function deleteProject(projectId){
   })
   location.reload()
 }
-returnButton.addEventListener('click', function(e) {
-  e.preventDefault()
-  console.log("helo")
-  location.reload()
-})
+
+
+
+function deleteMilestone(id){
+  
+  
+  fetch(MILESTONES_URL + "/" + id, {
+      method: "DELETE",
+      headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+      },
+      body: JSON.stringify({
+      })
+  })
+  fetchMilestones()
+}
 
 
 
@@ -88,8 +154,10 @@ projectForm.addEventListener('submit', function(e){
           name: inputFields[0].value,
           kind: inputFields[1].value,
           date: inputFields[2].value,
+          user: localStorage.email,
         })
       })  
+      
   location.reload()    
 })
 
@@ -106,13 +174,16 @@ milestoneForm.addEventListener('submit', function(e){
           name: milestoneFields[0].value,
           description: milestoneFields[1].value,
           lead_time: milestoneFields[2].value,
-          project_id : localStorage.project_id
+          project_id : localStorage.project_id, 
+          user_email: localStorage.email,
         })
       })  
-     location.reload()
+    fetchMilestones();
 })
 
-/*signUpForm.addEventListener('submit', function(e){
+signUpForm.addEventListener('submit', function(e){
+  localStorage.name = signUpFields[0].value
+  localStorage.email = signUpFields[1].value
   e.preventDefault()
     fetch(USERS_URL, {
         method: 'POST',
@@ -123,17 +194,22 @@ milestoneForm.addEventListener('submit', function(e){
         body: JSON.stringify({
           name: signUpFields[0].value,
           email: signUpFields[1].value,
-          password: signUpFields[2].value,
         })
       })
-      validateUser();  
-})*/
+      projectFormAppear()
+      fetchUsers()
+      
+})
+
+
+
+
 
 
 
 
 function displayMilestones(milestones, id){
-  { console.log(id)
+  { 
     localStorage.project_id = id
     milestoneForm.style.display ="block";
     mainContainer.innerHTML = " "  
@@ -142,8 +218,9 @@ function displayMilestones(milestones, id){
         
         <h1> ${milestone.name} </h1>
         <h2>${milestone.description}</h2>
-        <h3>${milestone.lead_time}</h3>
-        <button onclick="location.reload()"> Return to Project List</button>
+        <h3>${milestone.due_date}</h3>
+        <button onclick="deleteMilestone(${milestone.id})">Delete</button>
+        
         <btn>
       </div>`
     })
@@ -152,4 +229,15 @@ function displayMilestones(milestones, id){
   milestoneForm.style.display ="block";
   projectFormDisappear();
   
+}
+
+function displayUsers(users) {
+  users.forEach(user=> {
+    if (localStorage.email == user.email) {  
+      localStorage.user_id = user.id
+      
+      fetchProjects(user.id)
+    }
+    
+  })
 }

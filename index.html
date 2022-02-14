@@ -9,23 +9,23 @@
 </head>
 <body>
 
-    <div id ="hello">
     
-    </div>
     
 
     <img src='images/duedate3.png'>
-   <!-- <div class="signup-form-container">
+   <div class="signup-form-container">
+    <div id ="hello">
+    
+    </div>
         <form class="signup-form" >
+            <br>
             <h3> Sign In to Save Your Dates!</h3>
             <input type="text" name="name" value="" placeholder="Please Enter Your Name" class="signup-text">
             <br>
             <input type="text" name="email" value="" placeholder="Please Enter Your Email" class="signup-text">
-            <br>
-            <input type="password" name="password" value="" placeholder="Please Enter Your Password" class="signup-text">
-            <br>
-            <input type="submit" name="submit" value="Sign In" class="submit">
-    </form>-->
+            <br></br>
+            <input type="submit" name="submit" value="Sign In" class="submit"> 
+    </form>
     </div> 
 
    <div class="project-form">
@@ -37,7 +37,9 @@
             <br>
             <input type="date" name="due_date" placeholder="Due Date" class="input-text">
             <br>
-            <input type="submit" name="submit" value="Create Project" class="submit">
+            <input type="submit" name="submit" value="Create Project" class="submit"> 
+            <br></br>
+            <button class="logOut-button" onclick="logOut()"> Log Out</button>
     </form>
 </div>
   <div class="milestone-form">
@@ -49,9 +51,10 @@
         <br>
         <input type="number" name="lead_time" placeholder="Days Before Due Date" class="milestone-text">
         <br>
-        <input type="submit" name="submit" value="Create Project" class="submit">
+        <input type="submit" name="submit" value="Add Milestone" class="submit"> <button class="logOut-button" onclick="logOut()"> Log Out</button>
         <br> 
-        <input type="button" value="Return to Project List" class="return-button" >
+        <button onclick="fetchProjects()">Click Me!</button>
+        
 </form>
     </div>
   
@@ -72,5 +75,7 @@
 
     
     <script type="text/javascript" src="src/index.js"></script>
+    
 </body>
+
 </html>
