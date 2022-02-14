@@ -73,7 +73,6 @@ function displayProjects(projects){
   signUpForm.style.display = "none"
   milestoneForm.style.display = 'none'
   mainContainer.innerHTML = ""
-  hello.innerHTML = `Hello ${localStorage.name}`
   projectForm.style.display = "block"
      projects.forEach(project => {
      mainContainer.innerHTML += 
@@ -178,7 +177,7 @@ milestoneForm.addEventListener('submit', function(e){
           user_email: localStorage.email,
         })
       })  
-    fetchMilestones();
+    fetchMilestones(localStorage.project_id);
 })
 
 signUpForm.addEventListener('submit', function(e){
@@ -211,6 +210,7 @@ signUpForm.addEventListener('submit', function(e){
 function displayMilestones(milestones, id){
   { 
     localStorage.project_id = id
+    console.log( `the project id is ${id}`)
     milestoneForm.style.display ="block";
     mainContainer.innerHTML = " "  
     milestones.forEach(milestone => {  

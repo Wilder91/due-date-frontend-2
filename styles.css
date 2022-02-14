@@ -1,6 +1,6 @@
 body{
     background-color: #cfd8d2 !important;
-    font-family: 'Lato', Arial, Helvetica, sans-serif;
+    font-family:'Courier New', Courier, monospace;
     text-align: center;
 }
 
@@ -17,7 +17,7 @@ body{
     width: 400px;
     margin: auto;
     border-radius: 1cm;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family:'Courier New', Courier, monospace;
     text-align: center;
     
 }
@@ -29,13 +29,13 @@ main {
   }
 
 button {
-    background-color: #ffffff;
+    background-color: #cfd8d2;
     border-radius: 200px;
     border-color:rgb(9, 21, 32);
 }
 
 input[type=submit] {
-    background-color: #ffffff;
+    background-color: #cfd8d2;
     border-radius: 200px;
     border-color:rgb(9, 21, 32);
 }
