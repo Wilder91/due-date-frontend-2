@@ -20,40 +20,39 @@
         <form class="signup-form" >
             <br>
             <h3> Sign In to Save Your Dates!</h3>
-            <input type="text" name="name" value="" placeholder="Please Enter Your Name" class="signup-text">
+            <input type="text" name="name" value="" placeholder="Please Enter Your Name" class="signup-text" required>
             <br>
-            <input type="text" name="email" value="" placeholder="Please Enter Your Email" class="signup-text">
+            <input type="text" name="email" value="" placeholder="Please Enter Your Email" class="signup-text" required>
             <br></br>
             <input type="submit" name="submit" value="Sign In" class="submit"> 
     </form>
     </div> 
-
-   <div class="project-form">
-        <form class="project-form" >
+<div>
+   <form class="project-form">
             <h1> Create a New Project</h1>
-            <input type="text" name="name" value="" placeholder="Project Name" class="input-text">
+            <input type="text" name="name" value="" placeholder="Project Name" class="project-text" required>
             <br>
-            <input type="text" name="kind" value="" placeholder="Project Type" class="input-text">
+            <input type="text" name="kind" value="" placeholder="Project Type" class="project-text" required>
             <br>
-            <input type="date" name="due_date" placeholder="Due Date" class="input-text">
-            <br>
+            <input type="date" name="due_date" placeholder="Due Date" class="project-text" required>
+            <br></br>
             <input type="submit" name="submit" value="Create Project" class="submit"> 
             <br></br>
             
     </form>
 </div>
-  <div class="milestone-form">
-    <form class="milestone-form" >
+<div>
+  <form class="milestone-form">
         <h1> Create a New Milestone </h1>
-        <input type="text" name="name" value="" placeholder="Project Name" class="milestone-text">
+        <input type="text" name="name" value="" placeholder="Project Name" class="milestone-text" required>
         <br>
-        <input type="text" name="description" value="" placeholder="Project Description" class="milestone-text">
+        <input type="text" name="description" value="" placeholder="Project Description" class="milestone-text" required>
         <br>
-        <input type="number" name="lead_time" placeholder="Days Before Due Date" class="milestone-text">
+        <input type="number" name="lead_time" placeholder="Days Before Due Date" class="milestone-text" required>
         <br>
-        <input type="submit" name="submit" value="Add Milestone" class="submit"> <button class="logOut-button" onclick="logOut()"> Log Out</button>
+        <input type="submit" name="submit" value="Add Milestone" class="submit"> 
         <br> 
-        <button onclick="fetchProjects()">Click Me!</button>
+        <button onclick="fetchProjects()">Return to Projects</button>
         
 </form>
     </div>
@@ -77,5 +76,10 @@
     <script type="text/javascript" src="src/index.js"></script>
     
 </body>
+<script>
+    if ( window.history.replaceState ) {
+      window.history.replaceState( null, null, window.location.href );
+    }
+    </script>
 
 </html>
