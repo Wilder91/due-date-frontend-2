@@ -59,8 +59,8 @@ function fetchMilestones(id){
   fetch(`${HOME_URL}/milestones`)
   .then(response => response.json())
   .then(milestones => displayMilestones(milestones, id));
+  localStorage.project_id = id
 }
-
 function projectFormDisappear() {
   projectForm.style.display = 'none'
 }
@@ -74,23 +74,25 @@ function displayProjects(projects){
   milestoneForm.style.display="none"
   projectForm.style.display = "block"
   logOutButton.style.display="block"
+  
   mainContainer.innerHTML=" "
-     p = projects.sort((a, b) => a.date - b.date);  
+    
+     p = projects.sort((a, b) => Date.parse(a.due_date) - Date.parse(b.due_date)); 
      p.forEach(project => {
      mainContainer.innerHTML += 
 
      `<div class="project-card"> 
       <button onclick="fetchMilestones(${project.id})"> ${project.name} </button> 
+      <br></br>
       <h2>${project.kind}</h2>
       <h3>${project.due_date}</h3>
       <button onclick="deleteProject(${project.id})"> Delete</button>
-      <btn>
+      
       <br></br>
+      
       </div>
       `
-  
   })
-  
 }
 
 function deleteProject(projectId){
@@ -103,7 +105,7 @@ function deleteProject(projectId){
       body: JSON.stringify({
       })
   })
-  location.reload()
+  fetchProjects();
 }
 
 
@@ -125,7 +127,6 @@ function deleteMilestone(id){
 
 projectForm.addEventListener('submit', function(e){
   
- 
     fetch(PROJECTS_URL, {
         method: 'POST',
         headers: {
@@ -143,12 +144,12 @@ projectForm.addEventListener('submit', function(e){
 })
 
 milestoneForm.addEventListener('submit', function(e){
- 
-    fetch(HOME_URL + "/milestones", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: "application/json"
+  e.preventDefault();
+  fetch(HOME_URL + "/milestones", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: "application/json"
         },
         body: JSON.stringify({
           name: milestoneFields[0].value,
@@ -157,7 +158,8 @@ milestoneForm.addEventListener('submit', function(e){
           project_id: localStorage.project_id,
         })
       })  
-  fetchMilestones(localStorage.project_id)
+      console.log(localStorage.project_id);
+      fetchMilestones(localStorage.project_id);
 })
 
 signUpForm.addEventListener('submit', function(e){
@@ -176,8 +178,7 @@ signUpForm.addEventListener('submit', function(e){
         })
       })
       projectFormAppear()
-      fetchUsers()
-      
+      fetchUsers();
 })
 
 

@@ -1,20 +1,19 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Due Date</title>
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
-
+    
 </head>
-<body>
-
-    
-    
-
-    <img src='images/duedate3.png'>
+    <img src='images/due_date3.png'>
+    <br></br>
+   
    <div class="signup-form-container">
     <div id ="hello">
+<body> 
     
     </div>
         <form class="signup-form" >
@@ -42,7 +41,7 @@
     </form>
 </div>
 <div>
-  <form class="milestone-form">
+  <form class="milestone-form" onsubmit="fetchMilestones(localStorage.project_id)">
         <h1> Create a New Milestone </h1>
         <input type="text" name="name" value="" placeholder="Project Name" class="milestone-text" required>
         <br>
@@ -52,7 +51,7 @@
         <br>
         <input type="submit" name="submit" value="Add Milestone" class="submit"> 
         <br> 
-        <button onclick="fetchProjects()">Return to Projects</button>
+        <button onclick="fetchProjects(id)">Return to Projects</button>
         
 </form>
     </div>
