@@ -1,9 +1,9 @@
 
-
 body{
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
     background: url('images/background.jpg') no-repeat center center fixed; 
+
     
 }
 
@@ -85,17 +85,34 @@ button {
     text-align: center;
     font-size: 16px;
     margin: 4px 2px;
-    
+    border-radius: 100px;
     transition: 0.3s;
     display: inline-block;
     text-decoration: none;
     cursor: pointer;
+}
+p{
+    display: none;
+}
+
+
+
+button:hover {
+    background-color: #e8a4c9;
+}
+
+button:hover .innertext {
+    display:block;
 }
 
 input[type=submit] {
     background-color: #cfd8d2;
     border-radius: 200px;
     border-color:rgb(9, 21, 32);
+}
+
+input[type=submit]:hover {
+    background-color: #e8a4c9;
 }
 
 

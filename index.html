@@ -27,7 +27,7 @@
     </form>
     </div> 
 <div>
-   <form class="project-form">
+   <form class="project-form" style="display:none;">
             <h1> Create a New Project</h1>
             <input type="text" name="name" value="" placeholder="Project Name" class="project-text" required>
             <br>
@@ -41,11 +41,11 @@
     </form>
 </div>
 <div>
-  <form class="milestone-form" onsubmit="fetchMilestones(localStorage.project_id)">
+  <form class="milestone-form" onsubmit="fetchMilestones(localStorage.project_id)" style="display:none;">
         <h1> Create a New Milestone </h1>
-        <input type="text" name="name" value="" placeholder="Project Name" class="milestone-text" required>
+        <input type="text" name="name" value="" placeholder="Milestone Name" class="milestone-text" required>
         <br>
-        <input type="text" name="description" value="" placeholder="Project Description" class="milestone-text" required>
+        <input type="text" name="description" value="" placeholder="Milestone Description" class="milestone-text" required>
         <br>
         <input type="number" name="lead_time" placeholder="Days Before Due Date" class="milestone-text" required>
         <br>

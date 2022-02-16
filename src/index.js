@@ -23,6 +23,7 @@ checkForUser();
 
 function checkForUser() {
   if (localStorage.email) { 
+    signUpForm.style.display = "none"
     fetchUsers();
     signUpForm.style.display="block";
   } else {
@@ -58,7 +59,7 @@ function fetchUsers() {
 function fetchMilestones(id){
   fetch(`${HOME_URL}/milestones`)
   .then(response => response.json())
-  .then(milestones => displayMilestones(milestones, id));
+  .then(milestones => displayMilestones(milestones));
   localStorage.project_id = id
 }
 function projectFormDisappear() {
@@ -70,28 +71,31 @@ function projectFormAppear() {
 }
 
 function displayProjects(projects){
-  signUpForm.style.display = "none"
   milestoneForm.style.display="none"
   projectForm.style.display = "block"
   logOutButton.style.display="block"
   
   mainContainer.innerHTML=" "
-    
+     
      p = projects.sort((a, b) => Date.parse(a.due_date) - Date.parse(b.due_date)); 
      p.forEach(project => {
      mainContainer.innerHTML += 
 
-     `<div class="project-card"> 
+     `<div class="project-card">
+     <div class="innertext">
+      <p>Click to View Project's Milestones</p> 
       <button onclick="fetchMilestones(${project.id})"> ${project.name} </button> 
       <br></br>
       <h2>${project.kind}</h2>
       <h3>${project.due_date}</h3>
-      <button onclick="deleteProject(${project.id})"> Delete</button>
+      <button onclick="editProject(${project.id})">Edit<button onclick="deleteProject(${project.id})"> Delete</button>
       
       <br></br>
       
       </div>
       `
+   
+
   })
 }
 
@@ -119,6 +123,7 @@ function deleteMilestone(id){
       },
       body: JSON.stringify({
       })
+      
   })
   fetchMilestones(localStorage.project_id);
 }
@@ -126,7 +131,6 @@ function deleteMilestone(id){
 
 
 projectForm.addEventListener('submit', function(e){
-  
     fetch(PROJECTS_URL, {
         method: 'POST',
         headers: {
@@ -140,7 +144,7 @@ projectForm.addEventListener('submit', function(e){
           user: localStorage.email,
         })
       }) 
-    fetchProjects();    
+    fetchProjects(localStorage.user_id);    
 })
 
 milestoneForm.addEventListener('submit', function(e){
@@ -158,8 +162,8 @@ milestoneForm.addEventListener('submit', function(e){
           project_id: localStorage.project_id,
         })
       })  
-      console.log(localStorage.project_id);
       fetchMilestones(localStorage.project_id);
+      
 })
 
 signUpForm.addEventListener('submit', function(e){
@@ -181,7 +185,10 @@ signUpForm.addEventListener('submit', function(e){
       fetchUsers();
 })
 
+function editProject(id) {
 
+
+}
 
 
 
@@ -189,7 +196,8 @@ signUpForm.addEventListener('submit', function(e){
 
 
 function displayMilestones(milestones){
-  {
+  { 
+    milestoneForm.reset();
     milestoneForm.style.display ="block";
     mainContainer.innerHTML = " "  
     milestones.forEach(milestone => {  
@@ -217,6 +225,7 @@ function displayMilestones(milestones){
 
 function displayUser(users) {
   users.forEach(user=> {
+    signUpForm.style.display = "none"
     if (localStorage.email == user.email) {  
       localStorage.user_id = user.id
       fetchProjects()
