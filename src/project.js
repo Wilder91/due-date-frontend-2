@@ -18,13 +18,8 @@ class Project {
         this.user_id = user_id;
     }
     
-    render() {
-      console.log("Hello " + this.project_name)
-    }
+ 
 
-    get_outta_here() {
-      return `${this.project_name} bettere get outtta here`
-    }
 
     display_card(project) {
       var card = document.createElement("project-card")
