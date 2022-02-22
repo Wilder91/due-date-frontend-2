@@ -1,18 +1,35 @@
+
 const projectForm = document.querySelector(".project-form")
 const PROJECTS_URL = `${HOME_URL}/projects`
+const projectFields = document.querySelectorAll(".project-text")
+const userMilestones = document.querySelector(".milestones-button")
+const projectCard = document.querySelector(".project-card")
+
 projectForm.style.display ="none";
 
 class Project {
-    
-    constructor(name, kind, due_date) {
+    all = []
+    constructor(name, kind, due_date, user_id) {
         this.name = name;
-        this.kind = kind; 
+        this.kind = kind;
         this.due_date = due_date;
-
-        this.element = document.querySelector('main')
+        this.user_id = user_id;
     }
     
-}
+    render() {
+      console.log("Hello " + this.project_name)
+    }
+
+    get_outta_here() {
+      return `${this.project_name} bettere get outtta here`
+    }
+
+    display_card() {
+      
+      
+    }
+  
+};
 
 function fetchProjects() {
     fetch(`${USERS_URL}/${localStorage.user_id}/projects`)
@@ -21,31 +38,32 @@ function fetchProjects() {
   }
 
   function displayProjects(projects){
+    console.log("hello!")
+    projectForm.reset();
+    localStorage.removeItem('project_id');
     milestoneForm.style.display="none"
     projectForm.style.display = "block"
-    logOutButton.style.display="block"
-    
+    userMilestones.style.display="block"
     mainContainer.innerHTML=" "
-       
-       p = projects.sort((a, b) => Date.parse(a.due_date) - Date.parse(b.due_date)); 
-       p.forEach(project => {
-       mainContainer.innerHTML += 
-  
-       `<div class="project-card">
+         
+       projects.forEach(project => {
+         card = document.createElement("project-card")
+       card.innerHTML += 
+       `
+       <div class="project-card" id="${project.name}-card">
        <div class="innertext">
         <p>Click to View Project's Milestones</p> 
         <button onclick="fetchMilestones(${project.id})"> ${project.name} </button> 
         <br></br>
         <h2>${project.kind}</h2>
         <h3>${project.due_date}</h3>
-        <button onclick="editProject(${project.id})">Edit<button onclick="deleteProject(${project.id})"> Delete</button>
+        <button onclick="deleteProject(${project.id})"> Delete</button>
         
         <br></br>
         
         </div>
         `
-     
-  
+        mainContainer.appendChild(card)
     })
   }
 
@@ -58,23 +76,28 @@ function fetchProjects() {
         },
         body: JSON.stringify({
         })
+    }).then((response) => {
+      console.log(response)
+      fetchProjects();
     })
-    fetchProjects();
   }
 
   projectForm.addEventListener('submit', function(e){
-    fetch(PROJECTS_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          name: inputFields[0].value,
-          kind: inputFields[1].value,
-          date: inputFields[2].value,
-          user: localStorage.email,
-        })
-      }) 
-    fetchProjects(localStorage.user_id);    
+      e.preventDefault();
+    project = new Project(projectFields[0].value, projectFields[1].value, projectFields[2].value, localStorage.user_id)
+    addProject(project);
 })
+
+function addProject(project) {
+  fetch(PROJECTS_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: "application/json"
+    },
+    body: JSON.stringify(project)
+  }).then((response) => {
+    console.log(response)
+    fetchProjects();
+  })
+}

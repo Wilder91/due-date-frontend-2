@@ -27,6 +27,7 @@
     </form>
     </div> 
 <div>
+  
    <form class="project-form" style="display:none;">
             <h1> Create a New Project</h1>
             <input type="text" name="name" value="" placeholder="Project Name" class="project-text" required>
@@ -41,7 +42,7 @@
     </form>
 </div>
 <div>
-  <form class="milestone-form" onsubmit="fetchMilestones(localStorage.project_id)" style="display:none;">
+  <form class="milestone-form"  style="display:none;">
         <h1> Create a New Milestone </h1>
         <input type="text" name="name" value="" placeholder="Milestone Name" class="milestone-text" required>
         <br>
@@ -59,16 +60,16 @@
 
 
 
-    <main>
-
+    <main id="main">
+        
     </main>
     <br></br>
-    <button class="logOut-button" onclick="logOut()"> Log Out</button>
+    <button class="logOut-button" onclick="logOut()"> Log Out</button> <button class="mileStones-button" onclick="fetchUserMilestones(localStorage.user_id)" style="display:none;">View All of Your Milestones</button>
+    
     </div>
 
      
     
-
     
 
     

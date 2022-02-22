@@ -1,2 +1,6 @@
 login page -> user display -> projects -> milestone display 
                  lS.user                    ls.proj
+
+1. instantiate classes 
+2. no reloads 
+3. no duplicate fetches

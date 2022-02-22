@@ -50,6 +50,8 @@ body h3{
    padding-top: 24px;
     font-family:sans-serif;
    opacity: 100%;
+   border-width: 10px;
+   border-color: #cddbdb;
 }
 
 
@@ -115,5 +117,13 @@ input[type=submit]:hover {
     background-color: #e8a4c9;
 }
 
+.milestones-button {
+    position: absolute;
+    top: 45px;
+    RIGHT: 5%;
+    align-self: center;
+    width: 16%;
+   height: 10%;
+}
 
 
