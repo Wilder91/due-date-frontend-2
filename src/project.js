@@ -3,11 +3,13 @@ const projectForm = document.querySelector(".project-form")
 const PROJECTS_URL = `${HOME_URL}/projects`
 const projectFields = document.querySelectorAll(".project-text")
 const userMilestones = document.querySelector(".milestones-button")
-const projectCard = document.querySelector(".project-card")
+const projectCard = document.querySelectorAll(".project-card")
 
 projectForm.style.display ="none";
 
 class Project {
+  static projectCard = document.querySelector(".project-card")
+
     all = []
     constructor(name, kind, due_date, user_id) {
         this.name = name;
@@ -24,8 +26,22 @@ class Project {
       return `${this.project_name} bettere get outtta here`
     }
 
-    display_card() {
-      
+    display_card(project) {
+      var card = document.createElement("project-card")
+    card.innerHTML += 
+    `
+    <div class="project-card" id="${project.name}-card">
+    <div class="innertext">
+    <p>Click to View Project's Milestones</p> 
+    <button onclick="fetchMilestones(${project.id})"> ${project.name} </button> 
+    <br></br>
+    <h2>${project.kind}</h2>
+    <h3>${project.due_date}</h3>
+    <button onclick="deleteProject(${project.id})"> Delete</button>
+    <br></br>
+    </div>
+    `
+    mainContainer.appendChild(card)
       
     }
   
@@ -37,33 +53,20 @@ function fetchProjects() {
     .then(projects => displayProjects(projects));
   }
 
-  function displayProjects(projects){
-    console.log("hello!")
-    projectForm.reset();
-    localStorage.removeItem('project_id');
+  function user_page_style() {
     milestoneForm.style.display="none"
     projectForm.style.display = "block"
-    userMilestones.style.display="block"
+    
+  }
+
+  function displayProjects(projects){
+    projectForm.reset();
+    localStorage.removeItem('project_id');
+    user_page_style();
     mainContainer.innerHTML=" "
-         
        projects.forEach(project => {
-         card = document.createElement("project-card")
-       card.innerHTML += 
-       `
-       <div class="project-card" id="${project.name}-card">
-       <div class="innertext">
-        <p>Click to View Project's Milestones</p> 
-        <button onclick="fetchMilestones(${project.id})"> ${project.name} </button> 
-        <br></br>
-        <h2>${project.kind}</h2>
-        <h3>${project.due_date}</h3>
-        <button onclick="deleteProject(${project.id})"> Delete</button>
-        
-        <br></br>
-        
-        </div>
-        `
-        mainContainer.appendChild(card)
+         p = new Project(project)
+         p.display_card(project);
     })
   }
 
@@ -83,10 +86,11 @@ function fetchProjects() {
   }
 
   projectForm.addEventListener('submit', function(e){
-      e.preventDefault();
+    e.preventDefault();
     project = new Project(projectFields[0].value, projectFields[1].value, projectFields[2].value, localStorage.user_id)
     addProject(project);
 })
+
 
 function addProject(project) {
   fetch(PROJECTS_URL, {

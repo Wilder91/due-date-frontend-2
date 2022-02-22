@@ -60,6 +60,10 @@ body h3{
   
   
 }
+
+.projects-button{
+    margin: auto;
+}
 main {
     display: flex;
     flex-wrap: wrap;

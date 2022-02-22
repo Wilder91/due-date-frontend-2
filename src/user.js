@@ -83,6 +83,7 @@ function displayUser(users) {
     localStorage.clear()
     signUpForm.style.display="block";
     logOutButton.style.display="none";
+   
   }
   
   
