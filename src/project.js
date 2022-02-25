@@ -67,7 +67,7 @@ function fetchProjectsDelete(){
     projectForm.reset();
     localStorage.removeItem('project_id');
     user_page_style();
-
+    
     if (Project.all.length === 0){  
     projects.forEach(project => {
       p = new Project(project)

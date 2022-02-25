@@ -18,6 +18,8 @@ class Milestone {
     }
 
     static display_card(milestone) {
+     
+      console.log("once")
       let card = document.createElement("project-card")
       console.log(milestone)
       
@@ -41,12 +43,10 @@ class Milestone {
 }
 
 function showMilestones(id){
-  debugger
   localStorage.project_id = id
-  proj = Project.all.filter(project => project.id === id)
- 
-  proj[0].milestones.forEach(milestone =>{
-    Milestone.display_card(milestone)})  
+  milestones = Milestone.all.filter(milestone => milestone.project_id === id)
+  debugger
+    displayMilestones(milestones)  
 }
 
 function fetchMilestones(id){
@@ -107,7 +107,7 @@ milestoneForm.addEventListener('submit',  (e) => {
       milestoneForm.reset();
       mainContainer.innerHTML = " "  
      
-      debugger
+    
       milestones.forEach(milestone => {
         m = new Milestone(milestone)
         Milestone.display_card(m);
