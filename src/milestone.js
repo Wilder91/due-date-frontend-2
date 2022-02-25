@@ -44,9 +44,11 @@ class Milestone {
 
 function showMilestones(id){
   localStorage.project_id = id
-  milestones = Milestone.all.filter(milestone => milestone.project_id === id)
-  debugger
-    displayMilestones(milestones)  
+ 
+  proj = Project.all.filter(project => project.id === id)
+  let theProject = proj[0]
+
+    displayMilestones(theProject.milestones)  
 }
 
 function fetchMilestones(id){
