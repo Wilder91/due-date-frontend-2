@@ -44,23 +44,36 @@ class Milestone {
 
 function showMilestones(id){
   localStorage.project_id = id
- 
-  proj = Project.all.filter(project => project.id === id)
-  let theProject = proj[0]
+  
 
-    displayMilestones(theProject.milestones)  
+  if (Milestone.all.length === 0) {
+    
+    fetchMilestones(id)
+  } else { 
+    
+    displayMilestones(Milestone.all)
+  }
 }
 
-function fetchMilestones(id){
-
-  fetch(`${PROJECTS_URL}/${id}`)
+function fetchMilestones(){
+  fetch(`${USERS_URL}/${localStorage.user_id}/milestones`)
     .then(response => response.json())
-    .then(project => displayMilestones(project.milestones))
+    .then(milestones => createMilestones(milestones))
   }
 
-function addMilestone() {
 
-}
+function createMilestones(milestones) {
+  Milestone.all = []
+  sort = milestones.sort((a, b) => (a.id > b.id) ? 1 : -1)
+  projectForm.style.display="none";
+  milestoneForm.style.display ="block";
+  milestoneForm.reset();
+  mainContainer.innerHTML = " "  
+    milestones.forEach(milestone => {
+      m = new Milestone(milestone)
+    displayMilestones(milestones);
+    })
+  }
 
 
 milestoneForm.addEventListener('submit',  (e) => {
@@ -80,13 +93,13 @@ milestoneForm.addEventListener('submit',  (e) => {
         })
       }).then((response) => {
         console.log(response)
-        fetchMilestones(localStorage.project_id)
-        
+        fetchMilestones()
       })
       
   })
 
   function deleteMilestone(id){ 
+    milestone_id = id
     fetch(PROJECTS_URL + "/" + localStorage.project_id + "/milestones/" + id, {
         method: "DELETE",
         headers: {
@@ -98,24 +111,24 @@ milestoneForm.addEventListener('submit',  (e) => {
         
     }).then((response) => {
       console.log(response)
-      fetchMilestones(localStorage.project_id);
+      fetchMilestones(milestone_id);
     })
     
   }
 
-  function displayMilestones(milestones){
+  function displayMilestones(){
+  
      projectForm.style.display="none";
       milestoneForm.style.display ="block";
       milestoneForm.reset();
       mainContainer.innerHTML = " "  
-     
-    
-      milestones.forEach(milestone => {
-        m = new Milestone(milestone)
-        Milestone.display_card(m);
+      
+      sorted = Milestone.all.filter(m => m.project_id == localStorage.project_id)
+      sorted.forEach(milestone => {
+        Milestone.display_card(milestone);
       })
-    
   }
 
-  
 
+ 
+  
