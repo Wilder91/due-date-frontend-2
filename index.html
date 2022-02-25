@@ -1,4 +1,4 @@
-<html lang="en">
+<!DOCTYPE html>
 
 <head>
     <meta charset="UTF-8">
@@ -34,7 +34,7 @@
             <br>
             <input type="text" name="kind" value="" placeholder="Project Type" class="project-text" required>
             <br>
-            <input type="date" name="due_date" placeholder="Due Date" class="project-text" required>
+            <input type="date" name="due_date" placeholder="Due Date" class="project-text" placeholder="dd-mm-yyyy" required>
             <br></br>
             <input type="submit" name="submit" value="Create Project" class="submit"> 
             <br></br>
@@ -52,7 +52,7 @@
         <br>
         <input type="submit" name="submit" value="Add Milestone" class="submit"> 
         <br> 
-        <button onclick="fetchProjects(id)">Return to Projects</button>
+        <button type="button" type="button" onclick="displayProjects(Project.all)">Return to Projects</button>
         
 </form>
     </div>
@@ -65,7 +65,7 @@
     </main>
     <br></br>
    <!-- <button class="projects-button"onclick="fetchProjects()"> Return to Projects</button>-->
-    <button class="logOut-button" onclick="logOut()"> Log Out</button> <!--<button class="mileStones-button" onclick="fetchUserMilestones(localStorage.user_id)" style="display:none;">View All of Your Milestones</button>-->
+    <button type="button"  class="logOut-button" onclick="logOut()"> Log Out</button> <!--<button class="mileStones-button" onclick="fetchUserMilestones(localStorage.user_id)" style="display:none;">View All of Your Milestones</button>-->
     
     
     </div>

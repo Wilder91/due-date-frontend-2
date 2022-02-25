@@ -28,7 +28,7 @@ function displayUser(users) {
   }
   
 
-  signUpForm.addEventListener('submit', function(e){
+  signUpForm.addEventListener('submit',  (e) =>{
     localStorage.name = signUpFields[0].value
     localStorage.email = signUpFields[1].value
     e.preventDefault()
